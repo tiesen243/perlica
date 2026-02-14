@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button'
 import {
   Field,
   FieldError,
@@ -8,6 +7,10 @@ import {
   FieldSet,
 } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
+import {
+  RippleButton,
+  RippleButtonRipples,
+} from '@/components/ui/ripple-button'
 import { useForm } from '@/hooks/use-form'
 
 export default function App() {
@@ -42,6 +45,7 @@ export default function App() {
 
   return (
     <form
+      className='container max-w-md'
       onSubmit={(e) => {
         e.preventDefault()
         e.stopPropagation()
@@ -75,10 +79,22 @@ export default function App() {
           />
 
           <Field>
-            <Button type='submit' disabled={form.state.isPending}>
-              {form.state.isPending ? '...' : 'Submit'}
-            </Button>
-            <Button type='reset'>Reset</Button>
+            <RippleButton type='submit' disabled={form.state.isPending}>
+              Submit
+              <RippleButtonRipples />
+            </RippleButton>
+
+            <RippleButton
+              type='reset'
+              onClick={(e) => {
+                e.preventDefault()
+                form.reset()
+              }}
+              disabled={form.state.isPending}
+            >
+              Reset
+              <RippleButtonRipples />
+            </RippleButton>
           </Field>
         </FieldGroup>
       </FieldSet>

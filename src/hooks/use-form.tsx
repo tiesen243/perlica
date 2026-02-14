@@ -71,6 +71,7 @@ export function useForm<
     error: TError | null
     isPending: boolean
   }
+  reset: () => void
 } {
   const { defaultValues, schema, onSubmit, onSuccess, onError } = props
 
@@ -216,6 +217,16 @@ export function useForm<
     [formId, setFormValue, validate, isPending],
   )
 
+  const reset = React.useCallback(
+    () =>
+      startTransition(() => {
+        formValuesRef.current = defaultValues
+        formDataRef.current = null
+        formErrorRef.current = null
+      }),
+    [defaultValues],
+  )
+
   return React.useMemo(
     () => ({
       formId: `form-${formId}`,
@@ -235,8 +246,9 @@ export function useForm<
           return isPending
         },
       },
+      reset,
     }),
-    [formId, Field, handleSubmit, isPending],
+    [formId, Field, handleSubmit, isPending, reset],
   )
 }
 
