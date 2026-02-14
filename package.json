@@ -25,9 +25,9 @@
   "devDependencies": {
     "@react-router/serve": "^7.13.0",
     "@tailwindcss/vite": "^4.1.18",
-    "@types/react": "^19.2.13",
+    "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-rsc": "latest",
+    "@vitejs/plugin-rsc": "^0.5.19",
     "oxfmt": "^0.32.0",
     "oxlint": "^1.47.0",
     "tailwindcss": "^4.1.18",
