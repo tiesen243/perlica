@@ -4,8 +4,8 @@ import * as Context from 'effect/Context'
 import * as Effect from 'effect/Effect'
 import * as Layer from 'effect/Layer'
 
-import { env } from '@/lib/env'
-import { DrizzleError } from '@/lib/errors/drizzle'
+import { env } from './env'
+import { DrizzleError } from './errors/drizzle'
 
 const client = drizzle(env.DATABASE_URL ?? '', { casing: 'snake_case' })
 

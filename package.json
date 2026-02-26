@@ -4,7 +4,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "bun build --compile --minify --target bun --outfile dist/server src/server.ts",
     "dev": "bun --hot src/server.ts",
     "format": "oxfmt --check",
     "format:fix": "oxfmt --write",

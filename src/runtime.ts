@@ -3,11 +3,11 @@ import * as Layer from 'effect/Layer'
 import * as ManagedRuntime from 'effect/ManagedRuntime'
 import Elysia from 'elysia'
 
-import type { DrizzleError } from '@/lib/errors/drizzle'
-import type { HttpError } from '@/lib/errors/http'
+import type { DrizzleError } from './lib/errors/drizzle'
+import type { HttpError } from './lib/errors/http'
 
-import { Drizzle } from '@/lib/drizzle'
-import { PostService } from '@/services/post.service'
+import { Drizzle } from './lib/drizzle'
+import { PostService } from './services/post.service'
 
 const appLayer = Layer.mergeAll(PostService.Live)
 

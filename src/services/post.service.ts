@@ -2,12 +2,12 @@ import * as Context from 'effect/Context'
 import * as Effect from 'effect/Effect'
 import * as Layer from 'effect/Layer'
 
-import type { DrizzleError } from '@/lib/errors/drizzle'
-import type { PostInsert, PostSelect, PostUpdate } from '@/models/post.model'
+import type { DrizzleError } from '../lib/errors/drizzle'
+import type { PostInsert, PostSelect, PostUpdate } from '../models/post.model'
 
-import { Drizzle } from '@/lib/drizzle'
-import { HttpError } from '@/lib/errors/http'
-import { posts } from '@/models/post.model'
+import { Drizzle } from '../lib/drizzle'
+import { HttpError } from '../lib/errors/http'
+import { posts } from '../models/post.model'
 
 export class PostService extends Context.Tag('perlica.service.post')<
   PostService,

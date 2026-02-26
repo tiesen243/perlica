@@ -1,8 +1,8 @@
 import * as Effect from 'effect/Effect'
 import Elysia from 'elysia'
 
-import { postInsertSchema, postUpdateSchema } from '@/models/post.model'
-import { PostService } from '@/services/post.service'
+import { postInsertSchema, postUpdateSchema } from '../models/post.model'
+import { PostService } from '../services/post.service'
 
 export const postRoute = new Elysia({
   name: 'perlica.route.post',

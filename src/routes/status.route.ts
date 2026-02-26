@@ -1,10 +1,11 @@
 import Elysia from 'elysia'
 
-import { env } from '@/lib/env'
-
 import packageJson from '../../package.json' with { type: 'json' }
+import { env } from '../lib/env'
 
-export const statusRoute = new Elysia()
+export const statusRoute = new Elysia({
+  name: 'perlica.route.status',
+})
   .get('/', () => ({
     name: packageJson.name,
     version: packageJson.version,
