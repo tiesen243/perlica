@@ -7,6 +7,7 @@ import { PostService } from '../services/post.service'
 export const postRoute = new Elysia({
   name: 'perlica.route.post',
   prefix: '/api/posts',
+  tags: ['posts'],
 })
 
   .get('/', () =>

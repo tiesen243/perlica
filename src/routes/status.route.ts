@@ -5,14 +5,16 @@ import { env } from '../lib/env'
 
 export const statusRoute = new Elysia({
   name: 'perlica.route.status',
+  tags: ['status'],
 })
   .get('/', () => ({
     name: packageJson.name,
     version: packageJson.version,
     description: packageJson.description,
-    license: packageJson.license,
     homepage: packageJson.homepage,
     repository: packageJson.repository,
+    license: packageJson.license,
+    openapi: `${packageJson.homepage}/docs`,
   }))
   .get('/health', () => ({
     status: 'healthy',
