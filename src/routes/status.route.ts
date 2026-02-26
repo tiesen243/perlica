@@ -9,6 +9,10 @@ export const statusRoute = new Elysia({
   .get('/', () => ({
     name: packageJson.name,
     version: packageJson.version,
+    description: packageJson.description,
+    license: packageJson.license,
+    homepage: packageJson.homepage,
+    repository: packageJson.repository,
   }))
   .get('/health', () => ({
     status: 'healthy',
