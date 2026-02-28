@@ -1,15 +1,15 @@
 import * as orm from 'drizzle-orm'
 import { drizzle } from 'drizzle-orm/postgres-js'
-import * as Context from 'effect/Context'
 import * as Effect from 'effect/Effect'
 import * as Layer from 'effect/Layer'
+import * as ServiceMap from 'effect/ServiceMap'
 
 import { env } from './env'
 import { DrizzleError } from './errors/drizzle'
 
 const client = drizzle(env.DATABASE_URL ?? '', { casing: 'snake_case' })
 
-export class Drizzle extends Context.Tag('drizzle')<
+export class Drizzle extends ServiceMap.Service<
   Drizzle,
   {
     readonly client: ReturnType<typeof drizzle>
@@ -18,17 +18,17 @@ export class Drizzle extends Context.Tag('drizzle')<
       cb: (client: ReturnType<typeof drizzle>) => Promise<T>,
     ) => Effect.Effect<T, DrizzleError, void>
   }
->() {
-  static Live = Layer.succeed(this, {
-    client,
-    orm,
-    query: (cb) =>
-      Effect.tryPromise({
-        try: () => cb(client),
-        catch: (e) =>
-          new DrizzleError({
-            cause: e instanceof Error ? e.message : String(e),
-          }),
-      }),
-  })
+>()('perlica.lib.drizzle') {
+  static Live = Layer.effect(
+    this,
+    Effect.succeed({
+      client,
+      orm,
+      query: (cb) =>
+        Effect.tryPromise({
+          try: () => cb(client),
+          catch: () => new DrizzleError(),
+        }),
+    }),
+  )
 }

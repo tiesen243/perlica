@@ -1,15 +1,19 @@
-import * as Context from 'effect/Context'
 import * as Effect from 'effect/Effect'
 import * as Layer from 'effect/Layer'
+import * as ServiceMap from 'effect/ServiceMap'
 
 import type { DrizzleError } from '../lib/errors/drizzle'
-import type { PostInsert, PostSelect, PostUpdate } from '../models/post.model'
 
 import { Drizzle } from '../lib/drizzle'
 import { HttpError } from '../lib/errors/http'
-import { posts } from '../models/post.model'
+import {
+  posts,
+  type PostInsert,
+  type PostSelect,
+  type PostUpdate,
+} from '../models/post.model'
 
-export class PostService extends Context.Tag('perlica.service.post')<
+export class PostService extends ServiceMap.Service<
   PostService,
   {
     all: () => Effect.Effect<PostSelect[], DrizzleError, void>
@@ -26,13 +30,13 @@ export class PostService extends Context.Tag('perlica.service.post')<
       id: PostSelect['id'],
     ) => Effect.Effect<PostSelect['id'], DrizzleError | HttpError, void>
   }
->() {
-  static Live = Layer.effect(
+>()('perlica.service.post') {
+  static readonly Live = Layer.effect(
     this,
     Effect.gen(function* () {
       const { query, orm } = yield* Drizzle
 
-      return PostService.of({
+      return {
         all: () => query((c) => c.select().from(posts)),
 
         one: (id) =>
@@ -97,7 +101,38 @@ export class PostService extends Context.Tag('perlica.service.post')<
 
             return deleted.id
           }),
-      })
+      }
     }),
   )
 }
+
+// export class PostService extends ServiceMap.Service<
+//   PostService,
+//   {
+// >()('perlica.service.post') {
+//   static Live = Layer.effect(
+//     this,
+//     Effect.gen(function* () {
+//       const { query, orm } = yield* Drizzle
+//
+//       return PostService.of({
+//         all: () => query((c) => c.select().from(posts)),
+//
+//         one: (id) =>
+//           Effect.gen(function* () {
+//             const [post] = yield* query((c) =>
+//               c.select().from(posts).where(orm.eq(posts.id, id)).limit(1),
+//             )
+//             if (!post)
+//               return yield* new HttpError({
+//                 status: 404,
+//                 message: 'Post not found',
+//               })
+//
+//             return post
+//           }),
+//
+//       })
+//     }),
+//   )
+// }
